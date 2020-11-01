@@ -1,0 +1,29 @@
+{
+    "linux": {
+        "channel_id": "712720043305336854",
+        "keywords": [
+            "linux",
+            "ubuntu",
+            "arch",
+            "red hat",
+            "kali"
+        ]
+    },
+    "yazilim": {
+        "channel_id": "715535573053341747",
+        "keywords": [
+            "c",
+            "python",
+            "js",
+            "c++",
+            "cpp",
+            "c#",
+            "java",
+            "ruby",
+            "javascript",
+            "script",
+            "go",
+            "perl"
+        ]
+    }
+}
