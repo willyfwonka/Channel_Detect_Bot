@@ -5,7 +5,9 @@ import json
 import re
 import sys
 
-TOKEN_FILE = open('C:/Users/mehme/Desktop/token_deneme.txt', 'r')
+
+token_file_name = "./token.txt"
+TOKEN_FILE = open(token_file_name, 'r')
 TOKEN = TOKEN_FILE.readline()
 
 client = discord.Client()
@@ -31,7 +33,7 @@ class Bot(commands.Bot):
             keywords = []
 
             if str(message.author.id) != "768417482355900417":               
-                with open('C:/Users/mehme/Desktop/bot/test.json', 'r') as json_file: 
+                with open('./test.json', 'r') as json_file: 
 
                     data = json.load(json_file)
                     y_msg = message.content.lower()              
@@ -56,12 +58,18 @@ class Bot(commands.Bot):
                         pass
                     else:
                         await message.channel.send("Görünüşe göre sorunu <#{}> Kanalına yazman daha iyi olacaktır. <@{}>".format(str(data[channels[0]]["channel_id"]),message.author.id))
-                       
+                        await message.delete()   
                 elif len(channels) > 1:
                     channel_names = ""
                     for i in channels:
                         channel_names += "<#{}> ".format(data[i]["channel_id"])                     
-                    await message.channel.send("Sorunu {} Kanallarından birine yazman daha iyi olacaktır. <@{}>".format(channel_names,message.author.id))                                
+                    flag = False
+                    for x in channels:
+                        if (str(message.channel.id) == data[x]["channel_id"]):
+                            flag = True
+                    if flag == False:
+                        await message.channel.send("Sorunu {} Kanallarından birine yazman daha iyi olacaktır. <@{}>".format(channel_names,message.author.id))
+                        await message.delete()                    
             else:
                 pass
         except:

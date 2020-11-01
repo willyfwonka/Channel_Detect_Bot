@@ -1,6 +1,6 @@
 {
     "linux": {
-        "channel_id": "712720043305336854",
+        "channel_id": "766378053751275611",
         "keywords": [
             "linux",
             "ubuntu",
@@ -10,7 +10,7 @@
         ]
     },
     "yazilim": {
-        "channel_id": "715535573053341747",
+        "channel_id": "766378065080221726",
         "keywords": [
             "c",
             "python",

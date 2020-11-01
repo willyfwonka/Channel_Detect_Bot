@@ -1,7 +1,7 @@
 import json
 
 
-with open('C:/Users/mehme/Desktop/bot/test.json', 'r'  ) as json_file:
+with open('./test.json', 'r'  ) as json_file:
         global data
         data = json.load(json_file)
 while True:
@@ -16,7 +16,7 @@ q - Kaydet ve çık
     
 
     if process_numb == "q":
-        with open('C:/Users/mehme/Desktop/bot/test.json', "w") as outfile: 
+        with open('./test.json', "w") as outfile: 
             outfile.write(json.dumps(data, indent = 4))
         print(data) 
         break
