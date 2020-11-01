@@ -1,6 +1,6 @@
 {
     "linux": {
-        "channel_id": "766378053751275611",
+        "channel_id": "712720043305336854",
         "keywords": [
             "linux",
             "ubuntu",
@@ -10,7 +10,7 @@
         ]
     },
     "yazilim": {
-        "channel_id": "766378065080221726",
+        "channel_id": "715535573053341747",
         "keywords": [
             "c",
             "python",
@@ -24,6 +24,30 @@
             "script",
             "go",
             "perl"
+        ]
+    },
+    "ctf": {
+        "channel_id": "715535219486359593",
+        "keywords": [
+            "tryhackme",
+            "hackthebox",
+            "thm",
+            "htb",
+            "vulnhub",
+            "priviahub"
+        ]
+    },
+    "sorucevap": {
+        "channel_id": "694923935162040401",
+        "keywords": [
+            "donanım",
+            "donanim",
+            "ram",
+            "hdd",
+            "ssd",
+            "gpu",
+            "cpu",
+            "anakart"
         ]
     }
 }
