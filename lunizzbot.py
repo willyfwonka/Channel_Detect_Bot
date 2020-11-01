@@ -31,6 +31,7 @@ class Bot(commands.Bot):
              
             channels = []
             keywords = []
+            id = "<@!181008524590055424>"
 
             if str(message.author.id) != "768417482355900417":               
                 with open('./test.json', 'r') as json_file: 
@@ -54,29 +55,32 @@ class Bot(commands.Bot):
                                 continue
 
                 if len(channels) == 1:
-                    if str(message.channel.id) == str(data[channels[0]]["channel_id"]):
-                        pass
+                    if ( id in  message.content):
+                        await message.channel.send("Dostum bu etiket işe yarayacağına gerçekten emin misin? <@{}> ".format(message.author.id))
                     else:
-                        await message.channel.send("Görünüşe göre sorunu <#{}> Kanalına yazman daha iyi olacaktır. <@{}>".format(str(data[channels[0]]["channel_id"]),message.author.id))
-                        await message.delete()   
+                        if str(message.channel.id) == str(data[channels[0]]["channel_id"]):
+                            pass
+                        else:
+                            await message.channel.send("Görünüşe göre sorunu <#{}> Kanalına yazman daha iyi olacaktır. <@{}>".format(str(data[channels[0]]["channel_id"]),message.author.id))
+                            await message.delete()   
                 elif len(channels) > 1:
-                    channel_names = ""
-                    for i in channels:
-                        channel_names += "<#{}> ".format(data[i]["channel_id"])                     
-                    flag = False
-                    for x in channels:
-                        if (str(message.channel.id) == data[x]["channel_id"]):
-                            flag = True
-                    if flag == False:
-                        await message.channel.send("Sorunu {} Kanallarından birine yazman daha iyi olacaktır. <@{}>".format(channel_names,message.author.id))
-                        await message.delete()                    
+                    if ( id in  message.content):
+                        await message.channel.send("Dostum bu etiket işe yarayacağına gerçekten emin misin? <@{}> ".format(message.author.id))
+                    else:
+                        channel_names = ""
+                        for i in channels:
+                            channel_names += "<#{}> ".format(data[i]["channel_id"])                     
+                        flag = False
+                        for x in channels:
+                            if (str(message.channel.id) == data[x]["channel_id"]):
+                                flag = True
+                        if flag == False:
+                            await message.channel.send("Sorunu {} Kanallarından birine yazman daha iyi olacaktır. <@{}>".format(channel_names,message.author.id))
+                            await message.delete()                    
             else:
                 pass
         except:
             print(sys.exc_info()[0])
-
-        
-
-
+   
 bot = Bot()
 bot.run(TOKEN)
