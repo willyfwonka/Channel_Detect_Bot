@@ -60,11 +60,13 @@ class Bot(commands.Bot):
                     if len(channels) == 0:
                         if ( id in  message.content):
                             await message.channel.send("> {} \nDostum bu etiketin işe yarayacağına gerçekten emin misin? <@{}>".format(message.content.replace("<@!181008524590055424>","Lunizz"),message.author.id))
+                            await message.delete()
                         else:
                             return
                     elif len(channels) == 1:
                         if ( id in  message.content):
                             await message.channel.send("> {} \nDostum bu etiketin işe yarayacağına gerçekten emin misin? <@{}> ".format(message.content.replace("<@!181008524590055424>","Lunizz"),message.author.id))
+                            await message.delete()
                         else:
                             if str(message.channel.id) == str(data[channels[0]]["channel_id"]):
                                 pass
@@ -74,6 +76,7 @@ class Bot(commands.Bot):
                     elif len(channels) > 1:
                         if ( id in  message.content):
                             await message.channel.send("> {} \nDostum bu etiketin işe yarayacağına gerçekten emin misin? <@{}> ".format(message.content.replace("<@!181008524590055424>","Lunizz"),message.author.id))
+                            await message.delete()
                         else:
                             channel_names = ""
                             for i in channels:
