@@ -70,7 +70,7 @@ class Bot(commands.Bot):
                                 pass
                             else:
                                 await message.channel.send("> {} \nGörünüşe göre sorunu <#{}> kanalına yazman daha iyi olacaktır. <@{}>".format(message.content.replace("<@!181008524590055424>","Lunizz"),str(data[channels[0]]["channel_id"]),message.author.id))
-                                #await message.delete()   
+                                await message.delete()   
                     elif len(channels) > 1:
                         if ( id in  message.content):
                             await message.channel.send("> {} \nDostum bu etiketin işe yarayacağına gerçekten emin misin? <@{}> ".format(message.content.replace("<@!181008524590055424>","Lunizz"),message.author.id))
@@ -84,7 +84,7 @@ class Bot(commands.Bot):
                                     flag = True
                             if flag == False:
                                 await message.channel.send("> {} \nSorunu {} kanallarından birine yazman daha iyi olacaktır. <@{}>".format(message.content.replace("<@!181008524590055424>","Lunizz"),channel_names,message.author.id))
-                                #await message.delete()                    
+                                await message.delete()                    
                 else:
                     pass
         except:
