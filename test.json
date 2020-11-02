@@ -6,7 +6,8 @@
             "ubuntu",
             "arch",
             "red hat",
-            "kali"
+            "kali",
+            "debian"
         ]
     },
     "yazilim": {
@@ -34,13 +35,14 @@
             "thm",
             "htb",
             "vulnhub",
-            "priviahub"
+            "priviahub",
+            "ctf"
         ]
     },
     "sorucevap": {
         "channel_id": "694923935162040401",
         "keywords": [
-            "donanım",
+            "donan\u0131m",
             "donanim",
             "ram",
             "hdd",

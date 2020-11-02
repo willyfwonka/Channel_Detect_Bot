@@ -40,7 +40,7 @@ class Bot(commands.Bot):
 
                         data = json.load(json_file)
                         y_msg = message.content.lower()              
-                        r_y_msg = list(re.split("[ !@#$%^&*()_+-={}[]|:\";'<>?,./ ]", y_msg)) # Yazılan mesaj tek tek liste elemanı olarak atanıyor.
+                        r_y_msg = list(re.split("[ !@#$%^&*()'_+-={}[]|:\";'<>?,./ ]", y_msg)) # Yazılan mesaj tek tek liste elemanı olarak atanıyor.
                         
                         for i in data:
                             for y in r_y_msg:                                                   
@@ -57,21 +57,21 @@ class Bot(commands.Bot):
                                     continue
                     if len(channels) == 0:
                         if ( id in  message.content):
-                            await message.channel.send("Dostum bu etiket işe yarayacağına gerçekten emin misin? <@{}> ".format(message.author.id))
+                            await message.channel.send("Dostum bu etiketin işe yarayacağına gerçekten emin misin? <@{}> ".format(message.author.id))
                         else:
                             return
                     elif len(channels) == 1:
                         if ( id in  message.content):
-                            await message.channel.send("Dostum bu etiket işe yarayacağına gerçekten emin misin? <@{}> ".format(message.author.id))
+                            await message.channel.send("Dostum bu etiketin işe yarayacağına gerçekten emin misin? <@{}> ".format(message.author.id))
                         else:
                             if str(message.channel.id) == str(data[channels[0]]["channel_id"]):
                                 pass
                             else:
-                                await message.channel.send("Görünüşe göre sorunu <#{}> Kanalına yazman daha iyi olacaktır. <@{}>".format(str(data[channels[0]]["channel_id"]),message.author.id))
+                                await message.channel.send("Görünüşe göre sorunu <#{}> kanalına yazman daha iyi olacaktır. <@{}>".format(str(data[channels[0]]["channel_id"]),message.author.id))
                                 await message.delete()   
                     elif len(channels) > 1:
                         if ( id in  message.content):
-                            await message.channel.send("Dostum bu etiket işe yarayacağına gerçekten emin misin? <@{}> ".format(message.author.id))
+                            await message.channel.send("Dostum bu etiketin işe yarayacağına gerçekten emin misin? <@{}> ".format(message.author.id))
                         else:
                             channel_names = ""
                             for i in channels:
@@ -81,7 +81,7 @@ class Bot(commands.Bot):
                                 if (str(message.channel.id) == data[x]["channel_id"]):
                                     flag = True
                             if flag == False:
-                                await message.channel.send("Sorunu {} Kanallarından birine yazman daha iyi olacaktır. <@{}>".format(channel_names,message.author.id))
+                                await message.channel.send("Sorunu {} kanallarından birine yazman daha iyi olacaktır. <@{}>".format(channel_names,message.author.id))
                                 await message.delete()                    
                 else:
                     pass
