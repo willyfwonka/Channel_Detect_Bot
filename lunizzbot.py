@@ -29,10 +29,13 @@ class Bot(commands.Bot):
             return
         try:
             priviliged = ["181008524590055424", "163412984947933184","627113129465085973","271337670859423755","135407379314507776","253153886540398603","726111326870700193","159985870458322944","83010416610906112"]
+            priv_channel = ["605130756729077762"]
             channels = []
             keywords = []
             id = "<@!181008524590055424>"
             if str(message.author.id) in priviliged:
+                return
+            elif str(message.channel.id) not in priv_channel:
                 return
             else:
                 if str(message.author.id) != "772549756853420042":
