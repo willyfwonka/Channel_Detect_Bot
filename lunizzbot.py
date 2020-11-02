@@ -59,21 +59,21 @@ class Bot(commands.Bot):
                                     continue
                     if len(channels) == 0:
                         if ( id in  message.content):
-                            await message.reply("> {} \nDostum bu etiketin işe yarayacağına gerçekten emin misin? <@{}>".format(message.content.replace("<@!181008524590055424>","Lunizz"),message.author.id))
+                            await message.channel.send("> {} \nDostum bu etiketin işe yarayacağına gerçekten emin misin? <@{}>".format(message.content.replace("<@!181008524590055424>","Lunizz"),message.author.id))
                         else:
                             return
                     elif len(channels) == 1:
                         if ( id in  message.content):
-                            await message.reply("> {} \nDostum bu etiketin işe yarayacağına gerçekten emin misin? <@{}> ".format(message.content.replace("<@!181008524590055424>","Lunizz"),message.author.id))
+                            await message.channel.send("> {} \nDostum bu etiketin işe yarayacağına gerçekten emin misin? <@{}> ".format(message.content.replace("<@!181008524590055424>","Lunizz"),message.author.id))
                         else:
                             if str(message.channel.id) == str(data[channels[0]]["channel_id"]):
                                 pass
                             else:
-                                await message.reply("> {} \nGörünüşe göre sorunu <#{}> kanalına yazman daha iyi olacaktır. <@{}>".format(message.content.replace("<@!181008524590055424>","Lunizz"),str(data[channels[0]]["channel_id"]),message.author.id))
+                                await message.channel.send("> {} \nGörünüşe göre sorunu <#{}> kanalına yazman daha iyi olacaktır. <@{}>".format(message.content.replace("<@!181008524590055424>","Lunizz"),str(data[channels[0]]["channel_id"]),message.author.id))
                                 #await message.delete()   
                     elif len(channels) > 1:
                         if ( id in  message.content):
-                            await message.reply("> {} \nDostum bu etiketin işe yarayacağına gerçekten emin misin? <@{}> ".format(message.content.replace("<@!181008524590055424>","Lunizz"),message.author.id))
+                            await message.channel.send("> {} \nDostum bu etiketin işe yarayacağına gerçekten emin misin? <@{}> ".format(message.content.replace("<@!181008524590055424>","Lunizz"),message.author.id))
                         else:
                             channel_names = ""
                             for i in channels:
@@ -83,7 +83,7 @@ class Bot(commands.Bot):
                                 if (str(message.channel.id) == data[x]["channel_id"]):
                                     flag = True
                             if flag == False:
-                                await message.reply("> {} \nSorunu {} kanallarından birine yazman daha iyi olacaktır. <@{}>".format(message.content.replace("<@!181008524590055424>","Lunizz"),channel_names,message.author.id))
+                                await message.channel.send("> {} \nSorunu {} kanallarından birine yazman daha iyi olacaktır. <@{}>".format(message.content.replace("<@!181008524590055424>","Lunizz"),channel_names,message.author.id))
                                 #await message.delete()                    
                 else:
                     pass
