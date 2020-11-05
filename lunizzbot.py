@@ -32,7 +32,7 @@ class Bot(commands.Bot):
             priv_channel = ["605130756729077762"]
             channels = []
             keywords = []
-            id = "<@!181008524590055424>"
+            id = ["<@!181008524590055424>","<@181008524590055424>"]
             if str(message.author.id) in priviliged:
                 return
             elif str(message.channel.id) not in priv_channel:
@@ -58,15 +58,13 @@ class Bot(commands.Bot):
                                 else:
                                     continue
                     if len(channels) == 0:
-                        if ( id in  message.content):
+                        if ( (id[0] in  message.content) or (id[1] in message.content) ):
                             await message.channel.send("> {} \nDostum bu etiketin işe yarayacağına gerçekten emin misin? <@{}>".format(message.content.replace("<@!181008524590055424>","Lunizz"),message.author.id))
-                            await message.delete()
                         else:
                             return
                     elif len(channels) == 1:
-                        if ( id in  message.content):
+                        if ( (id[0] in  message.content) or (id[1] in message.content) ):
                             await message.channel.send("> {} \nDostum bu etiketin işe yarayacağına gerçekten emin misin? <@{}> ".format(message.content.replace("<@!181008524590055424>","Lunizz"),message.author.id))
-                            await message.delete()
                         else:
                             if str(message.channel.id) == str(data[channels[0]]["channel_id"]):
                                 pass
@@ -74,9 +72,8 @@ class Bot(commands.Bot):
                                 await message.channel.send("> {} \nGörünüşe göre sorunu <#{}> kanalına yazman daha iyi olacaktır. <@{}>".format(message.content.replace("<@!181008524590055424>","Lunizz"),str(data[channels[0]]["channel_id"]),message.author.id))
                                 await message.delete()   
                     elif len(channels) > 1:
-                        if ( id in  message.content):
+                        if ( (id[0] in  message.content) or (id[1] in message.content) ):
                             await message.channel.send("> {} \nDostum bu etiketin işe yarayacağına gerçekten emin misin? <@{}> ".format(message.content.replace("<@!181008524590055424>","Lunizz"),message.author.id))
-                            await message.delete()
                         else:
                             channel_names = ""
                             for i in channels:
