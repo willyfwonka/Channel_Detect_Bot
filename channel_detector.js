@@ -14,9 +14,8 @@ dotenv.config({
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
 });
-                // modz                    lunizzers            vips                  interfazes              droids              botun rolü
+                  // modz                    lunizzers            vips                  interfazes              droids              botun rolü
 let priviliged = ["605125919643926617", "605126315166924830", "605141526636396565", "701051279388049438", "605133230135312386"]
-// let priviliged = ["799269621051424808"];
 let botid = "772549756853420042";
 let priv_channel = ["605130756729077762"]
 let lunizzid = ["<@!181008524590055424>","<@181008524590055424>"]
@@ -50,15 +49,19 @@ client.on('message', msg => {
   });
 
   let dictkw = JSON.parse(keywords);
-  let userroles = msg.member.roles.cache.toJSON();
   let priviliged_user_flag = false;
-  for (i in userroles){
-    for (j in priviliged){
-    if (priviliged[j] === userroles[i]["id"]){
-      priviliged_user_flag = true;
-    }
+  if (msg.member.roles != undefined){
+    userroles = msg.member.roles.cache.toJSON();
+    for (i in userroles){
+      for (j in priviliged){
+      if (priviliged[j] === userroles[i]["id"]){
+        priviliged_user_flag = true;
+      }
+      }
     }
   }
+  console.log("Flag"+ priviliged_user_flag)
+
   let channel_flag = false;
   for (i in priv_channel){
     if(priv_channel[i] === msg.channel.id){
@@ -69,7 +72,7 @@ client.on('message', msg => {
     return;
   }
   else if(priviliged_user_flag){
-	return;
+    return;
   }else {
     if(channel_flag){
       let channelsinmessage = [];
@@ -161,6 +164,7 @@ client.on('messageReactionAdd',msg => {
                       message.messages.cache.get(messageIDMatcher[msg.message.id]["msgid"]).delete();
                     })
                     .catch(err => console.log(err));
+                    // msg.message.client.guilds.cache.get(messageIDMatcher[msg.message.id]["msgid"]).delete();
                     return;
                   }
                 }
