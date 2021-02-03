@@ -20,7 +20,7 @@ let botid = "772549756853420042";
 let priv_channel = ["605130756729077762"]
 let lunizzid = ["<@!181008524590055424>","<@181008524590055424>"]
 let silinecek = "";
-client.on('message', msg => {
+client.on('message', async msg => {
   var date = new Date();
   if(Object.keys(messageIDMatcher).length > 0){
     for (i in messageIDMatcher){
@@ -36,8 +36,8 @@ client.on('message', msg => {
       "timestamp": date.getTime()
     }
     temp.pop();
-    msg.edit(temp.join(" "));
-    msg.react("👍");
+    await msg.edit(temp.join(" "));
+    await msg.react("👍");
   }
   let channel_list = [];
   let keyword_list = [];
@@ -50,8 +50,8 @@ client.on('message', msg => {
 
   let dictkw = JSON.parse(keywords);
   let priviliged_user_flag = false;
-  if (msg.member.roles != undefined){
-    userroles = msg.member.roles.cache.toJSON();
+  if (await msg.member.roles != undefined){
+    userroles = await msg.member.roles.cache.toJSON();
     for (i in userroles){
       for (j in priviliged){
       if (priviliged[j] === userroles[i]["id"]){
@@ -60,7 +60,6 @@ client.on('message', msg => {
       }
     }
   }
-  console.log("Flag"+ priviliged_user_flag)
 
   let channel_flag = false;
   for (i in priv_channel){
@@ -91,44 +90,45 @@ client.on('message', msg => {
           for (k in temp){
             if(dictkw[i]["keywords"][j] === temp[k]){
               let isExist = false;
+              console.log(channel_list.length);
               if(channel_list.length === 0){
-                channel_list.push(dictkw[i]["channel_id"]);
+                channel_list.push(JSON.parse(keywords)[i]["channel_id"]);
                 channel_chooser = true;
               }else{
                 for(l in channel_list){
-                  if(channel_list[l] === temp[k]){
+                  if(channel_list[l] === dictkw[i]["channel_id"]){
                     isExist = true;
                   }
                 }
                 if(!isExist){
                   channel_list.push(JSON.parse(keywords)[i]["channel_id"]);
                   channel_chooser = true;
-                }else{
-                  return;
                 }
               }
             }
           }
         }
       }
+      console.log(channel_list)
       if(lunizzflag){
-        msg.channel.send("> "+ msg.content.replace("<@!181008524590055424>","Lunizz").replace("<@181008524590055424>","Lunizz") +" \nDostum bu etiketin işe yarayacağına gerçekten emin misin? <@"+msg.author.id+"> . Mesajın kendini imha etmesini istiyorsan 👍 'a basabilirsin. " + msg.id)
+        await msg.channel.send("> "+ msg.content.replace("<@!181008524590055424>","Lunizz").replace("<@181008524590055424>","Lunizz") +" \nDostum bu etiketin işe yarayacağına gerçekten emin misin? <@"+msg.author.id+"> . Mesajın kendini imha etmesini istiyorsan 👍 'a basabilirsin. " + " Yetişin <@&605125919643926617> " + msg.id);
       }else if (channel_chooser){
         if(channel_list.length === 1){
-          msg.channel.send("> "+msg.content+" \nGörünüşe göre sorunu <#" + channel_list[0]+"> kanalına yazman daha iyi olacaktır. <@"+msg.author.id+"> . Mesajın kendini imha etmesini istiyorsan 👍 'a basabilirsin. " + msg.id);
+          await msg.channel.send("> "+msg.content+" \nGörünüşe göre sorunu <#" + channel_list[0]+"> kanalına yazman daha iyi olacaktır. <@"+msg.author.id+"> . Mesajın kendini imha etmesini istiyorsan 👍 'a basabilirsin. " + msg.id + " Yetişin <@" + 605125919643926617 + ">");
         }else{
           let temp_text = "";
           for (i in channel_list){
             temp_text += "<#" + channel_list[i] + "> ";
           }
-          msg.channel.send("> "+msg.content+" \nGörünüşe göre sorunu " + temp_text +"kanallarından birine yazman daha iyi olacaktır. <@"+msg.author.id+"> . Mesajın kendini imha etmesini istiyorsan 👍 'a basabilirsin. " + msg.id);
+          await msg.channel.send("> "+msg.content+" \nGörünüşe göre sorunu " + temp_text +"kanallarından birine yazman daha iyi olacaktır. <@"+msg.author.id+"> . Mesajın kendini imha etmesini istiyorsan 👍 'a basabilirsin. " + msg.id);
         }
       }
     }
     }
 });
 
-client.on('messageReactionAdd',msg => {
+
+client.on('messageReactionAdd',async msg => {
   if(msg.users.cache.lastKey() === botid){
     return;
   }
@@ -143,25 +143,27 @@ client.on('messageReactionAdd',msg => {
       if (typeof messageIDMatcher[msg.message.id] === "undefined"){
         return;
       }else{
-        msg.message.channel.fetch(messageIDMatcher[msg.message.id]["msgid"])
-        .then(message => {
-          for (i in msg.users.cache.array()){
-            if(message.messages.cache.get(messageIDMatcher[msg.message.id]["msgid"]).author.id === msg.users.cache.array()[i].id){
-              msg.message.edit(msg.message.content + " ✅");
-              message.messages.cache.get(messageIDMatcher[msg.message.id]["msgid"]).delete();
+        await msg.message.channel.fetch(messageIDMatcher[msg.message.id]["msgid"])
+        .then(async message => {
+          let reactUsers = await msg.users.cache.array();
+          for (i in reactUsers){
+            if(message.messages.cache.get(messageIDMatcher[msg.message.id]["msgid"]).author.id === reactUsers[i].id){
+              await msg.message.edit(msg.message.content + " ✅");
+              await message.messages.cache.get(messageIDMatcher[msg.message.id]["msgid"]).delete();
               return;
             }
           }
-          for (i in msg.users.cache.array()){
-            msg.message.guild.members.fetch(msg.users.cache.array()[i].id)
-            .then(message => {
+          for (i in reactUsers){
+            await msg.message.guild.members.fetch(reactUsers[i].id)
+            .then(async message => {
               for (i in priviliged){
-                for (k in message._roles){
-                  if(message._roles[k] === priviliged[i]){
-                    msg.message.edit(msg.message.content + " ✅");
-                    msg.message.channel.fetch(messageIDMatcher[msg.message.id]["msgid"])
-                    .then(message => {
-                      message.messages.cache.get(messageIDMatcher[msg.message.id]["msgid"]).delete();
+                let memberroles = await message._roles;
+                for (k in memberroles){
+                  if(memberroles[k] === priviliged[i]){
+                    await msg.message.edit(msg.message.content + " ✅");
+                    await msg.message.channel.fetch(messageIDMatcher[msg.message.id]["msgid"])
+                    .then(async message => {
+                      await message.messages.cache.get(messageIDMatcher[msg.message.id]["msgid"]).delete();
                     })
                     .catch(err => console.log(err));
                     // msg.message.client.guilds.cache.get(messageIDMatcher[msg.message.id]["msgid"]).delete();
