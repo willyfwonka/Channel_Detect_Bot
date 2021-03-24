@@ -50,8 +50,8 @@ client.on('message', async msg => {
 
   let dictkw = JSON.parse(keywords);
   let priviliged_user_flag = false;
-  if (await msg.member.roles != undefined){
-    userroles = await msg.member.roles.cache.toJSON();
+  if (msg.member._roles != undefined){
+    userroles = msg.member.roles.cache.toJSON();
     for (i in userroles){
       for (j in priviliged){
       if (priviliged[j] === userroles[i]["id"]){
