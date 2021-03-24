@@ -24,7 +24,7 @@ client.on('message', async msg => {
   var date = new Date();
   if(Object.keys(messageIDMatcher).length > 0){
     for (i in messageIDMatcher){
-      if((date.getTime() - messageIDMatcher[i]["timestamp"]) >= 60*1000){
+      if((date.getTime() - messageIDMatcher[i]["timestamp"]) >= 10*60*1000){
         delete messageIDMatcher[i];
       }
     }
@@ -90,7 +90,6 @@ client.on('message', async msg => {
           for (k in temp){
             if(dictkw[i]["keywords"][j] === temp[k]){
               let isExist = false;
-              console.log(channel_list.length);
               if(channel_list.length === 0){
                 channel_list.push(JSON.parse(keywords)[i]["channel_id"]);
                 channel_chooser = true;
@@ -109,18 +108,17 @@ client.on('message', async msg => {
           }
         }
       }
-      console.log(channel_list)
       if(lunizzflag){
-        await msg.channel.send("> "+ msg.content.replace("<@!181008524590055424>","Lunizz").replace("<@181008524590055424>","Lunizz") +" \nDostum bu etiketin işe yarayacağına gerçekten emin misin? <@"+msg.author.id+"> . Mesajın kendini imha etmesini istiyorsan 👍 'a basabilirsin. " + " Yetişin <@&605125919643926617> " + msg.id);
+        await msg.channel.send("> "+ msg.content.replaceAll("\n","\n > ").replaceAll("<@!181008524590055424>","Lunizz").replaceAll("<@181008524590055424>","Lunizz").replaceAll("@everyone"," ") +" \nDostum bu etiketin işe yarayacağına gerçekten emin misin? <@"+msg.author.id+"> . Mesajın kendini imha etmesini istiyorsan 👍 'a basabilirsin. " + " Yetişin <@&605125919643926617> " + msg.id)
       }else if (channel_chooser){
         if(channel_list.length === 1){
-          await msg.channel.send("> "+msg.content+" \nGörünüşe göre sorunu <#" + channel_list[0]+"> kanalına yazman daha iyi olacaktır. <@"+msg.author.id+"> . Mesajın kendini imha etmesini istiyorsan 👍 'a basabilirsin. " + msg.id + " Yetişin <@" + 605125919643926617 + ">");
+          await msg.channel.send("> "+msg.content.replaceAll("\n","\n > ").replaceAll("<@!181008524590055424>","Lunizz").replaceAll("<@181008524590055424>","Lunizz").replaceAll("@everyone"," ")+" \nGörünüşe göre sorunu <#" + channel_list[0]+"> kanalına yazman daha iyi olacaktır. <@"+msg.author.id+"> . Mesajın kendini imha etmesini istiyorsan 👍 'a basabilirsin. " + msg.id);
         }else{
           let temp_text = "";
           for (i in channel_list){
             temp_text += "<#" + channel_list[i] + "> ";
           }
-          await msg.channel.send("> "+msg.content+" \nGörünüşe göre sorunu " + temp_text +"kanallarından birine yazman daha iyi olacaktır. <@"+msg.author.id+"> . Mesajın kendini imha etmesini istiyorsan 👍 'a basabilirsin. " + msg.id);
+          await msg.channel.send("> "+msg.content.replaceAll("\n","\n > ").replaceAll("<@!181008524590055424>","Lunizz").replaceAll("<@181008524590055424>","Lunizz").replaceAll("@everyone"," ")+" \nGörünüşe göre sorunu " + temp_text +"kanallarından birine yazman daha iyi olacaktır. <@"+msg.author.id+"> . Mesajın kendini imha etmesini istiyorsan 👍 'a basabilirsin. " + msg.id);
         }
       }
     }
@@ -150,6 +148,7 @@ client.on('messageReactionAdd',async msg => {
             if(message.messages.cache.get(messageIDMatcher[msg.message.id]["msgid"]).author.id === reactUsers[i].id){
               await msg.message.edit(msg.message.content + " ✅");
               await message.messages.cache.get(messageIDMatcher[msg.message.id]["msgid"]).delete();
+              await msg.message.delete();
               return;
             }
           }
@@ -166,7 +165,7 @@ client.on('messageReactionAdd',async msg => {
                       await message.messages.cache.get(messageIDMatcher[msg.message.id]["msgid"]).delete();
                     })
                     .catch(err => console.log(err));
-                    // msg.message.client.guilds.cache.get(messageIDMatcher[msg.message.id]["msgid"]).delete();
+                    await msg.message.delete();
                     return;
                   }
                 }
