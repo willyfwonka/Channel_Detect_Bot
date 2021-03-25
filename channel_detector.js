@@ -6,7 +6,8 @@ const client = new Discord.Client();
 const fs = require('fs');
 const { PassThrough } = require('stream');
 // Environment Variables
-let messageIDMatcher = {}; Object.keys(messageIDMatcher).length
+let messageIDMatcher = {};
+Object.keys(messageIDMatcher).length
 
 dotenv.config({
   path: "./config/config.env",
@@ -21,7 +22,7 @@ let priv_channel = ["605130756729077762"]
 let lunizzid = ["<@!181008524590055424>", "<@181008524590055424>"]
 let silinecek = "";
 client.on('message', async msg => {
-  if (msg.channel.type === "text"){
+  if (!msg.author.bot && msg.channel.type === "text"){
     var date = new Date();
     if (Object.keys(messageIDMatcher).length > 0) {
       for (i in messageIDMatcher) {
@@ -51,7 +52,18 @@ client.on('message', async msg => {
   
     let dictkw = JSON.parse(keywords);
     let priviliged_user_flag = false;
-    userroles = msg.member.roles.cache.toJSON();
+    try {
+      userroles = msg.member.roles.cache.toJSON();
+    }
+    catch (e) {
+      console.log("entering catch block");
+      console.log(msg)
+      console.log(e);
+      console.log("leaving catch block");
+    }
+    finally {
+      console.log("entering and leaving the finally block");
+    }
     for (i in userroles) {
       for (j in priviliged) {
         if (priviliged[j] === userroles[i]["id"]) {
