@@ -22,7 +22,13 @@ let priv_channel = ["605130756729077762"]
 let lunizzid = ["<@!181008524590055424>", "<@181008524590055424>"]
 let silinecek = "";
 client.on('message', async msg => {
-  if (!msg.author.bot && msg.channel.type === "text"){
+    let privBotFlag = false
+    if(msg.author.bot){
+        if (msg.author.id !== botid){
+            privBotFlag = true
+        }
+    }
+  if (!privBotFlag && msg.channel.type === "text"){
     var date = new Date();
     if (Object.keys(messageIDMatcher).length > 0) {
       for (i in messageIDMatcher) {
@@ -60,9 +66,6 @@ client.on('message', async msg => {
       console.log(msg)
       console.log(e);
       console.log("leaving catch block");
-    }
-    finally {
-      console.log("entering and leaving the finally block");
     }
     for (i in userroles) {
       for (j in priviliged) {
