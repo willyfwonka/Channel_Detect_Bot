@@ -15,8 +15,8 @@ dotenv.config({
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
 });
-// modz                    lunizzers            vips                  interfazes              droids              botun rolü        duyuru botu
-let priviliged = ["605125919643926617", "605126315166924830", "605141526636396565", "701051279388049438", "605133230135312386", "832024080122380322"]
+//                    modz                   taç                  cr3w                    droidz              botun rolü            c0re
+let priviliged = ["605125919643926617", "699359491300261988", "842914125360922624", "605133230135312386", "811514595697098783", "605141526636396565"]
 let botid = "772549756853420042";
 let priv_channel = ["605130756729077762"]
 let lunizzid = ["<@!181008524590055424>", "<@181008524590055424>"]
