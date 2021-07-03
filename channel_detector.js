@@ -85,12 +85,6 @@ client.on('message', async msg => {
     else if (priviliged_user_flag) {
       return;
     } else {
-      let lunizzflag = false;
-      for (i in lunizzid) {
-        if (msg.content.includes(lunizzid[i])) {
-          lunizzflag = true;
-        }
-      }
       if (channel_flag) {
         let channelsinmessage = [];
         let temp = msg.content.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, " ");
@@ -120,9 +114,7 @@ client.on('message', async msg => {
             }
           }
         }
-        if (lunizzflag) {
-          await msg.channel.send("> " + msg.content.replaceAll("\n", "\n > ").replaceAll("<@!181008524590055424>", "Lunizz").replaceAll("<@181008524590055424>", "Lunizz").replaceAll("@everyone", " ").substring(0,1000) + " \nDostum bu etiketin işe yarayacağına gerçekten emin misin? <@" + msg.author.id + "> . Mesajın kendini imha etmesini istiyorsan 👍 'a basabilirsin. " + " Yetişin <@&605125919643926617> " + msg.id)
-        } else if (channel_chooser) {
+        if (channel_chooser) {
           if (channel_list.length === 1) {
             await msg.channel.send("> " + msg.content.replaceAll("\n", "\n > ").replaceAll("<@!181008524590055424>", "Lunizz").replaceAll("<@181008524590055424>", "Lunizz").replaceAll("@everyone", " ").substring(0,1000) + " \nGörünüşe göre sorunu <#" + channel_list[0] + "> kanalına yazman daha iyi olacaktır. <@" + msg.author.id + "> . Mesajın kendini imha etmesini istiyorsan 👍 'a basabilirsin. " + msg.id);
           } else {
@@ -132,10 +124,6 @@ client.on('message', async msg => {
             }
             await msg.channel.send("> " + msg.content.replaceAll("\n", "\n > ").replaceAll("<@!181008524590055424>", "Lunizz").replaceAll("<@181008524590055424>", "Lunizz").replaceAll("@everyone", " ").substring(0,1000) + " \nGörünüşe göre sorunu " + temp_text + "kanallarından birine yazman daha iyi olacaktır. <@" + msg.author.id + "> . Mesajın kendini imha etmesini istiyorsan 👍 'a basabilirsin. " + msg.id);
           }
-        }
-      } else {
-        if (lunizzflag) {
-          await msg.channel.send("> " + msg.content.replaceAll("\n", "\n > ").replaceAll("<@!181008524590055424>", "Lunizz").replaceAll("<@181008524590055424>", "Lunizz").replaceAll("@everyone", " ") + " \nDostum bu etiketin işe yarayacağına gerçekten emin misin? <@" + msg.author.id + "> . Mesajın kendini imha etmesini istiyorsan 👍 'a basabilirsin. " + " Yetişin <@&605125919643926617> " + msg.id)
         }
       }
     }
@@ -158,12 +146,16 @@ client.on('messageReactionAdd', async msg => {
       if (typeof messageIDMatcher[msg.message.id] === "undefined") {
         return;
       } else {
+        console.log(msg.message.id)
+        console.log(messageIDMatcher[msg.message.id]["msgid"]);
         await msg.message.channel.fetch(messageIDMatcher[msg.message.id]["msgid"])
-          .then(async message => {
+          .then(async channel => {
+            reactedmessage = await channel.messages.cache.get(messageIDMatcher[msg.message.id]["msgid"])
+            let reactUsers = msg.users.cache.array();
             for (i in reactUsers) {
               if (reactedmessage.author.id === reactUsers[i].id) {
                 await msg.message.edit(msg.message.content + " ✅");
-                await message.delete();
+                await reactedmessage.delete();
                 await msg.message.delete();
                 console.log("===")
                 console.log(msg.message.content)
