@@ -21,6 +21,9 @@ let lunizzid = ["<@!181008524590055424>", "<@181008524590055424>"]
 
 client.on('message', async msg => {
   let privBotFlag = false
+  if(msg.content.startswith('!google')){
+    return;
+  }
   if (msg.author.bot) {
     if (msg.author.id !== botid) {
       privBotFlag = true
