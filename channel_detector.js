@@ -22,7 +22,7 @@ const lunizzid = ["<@!181008524590055424>", "<@181008524590055424>"]
 client.on('message', async msg => {
   const possibleFraud = msg.content.match(/stea|comm|.ru|take|my|skin|savjyv5.png|trade/img);
   // her mesajda genelde 5 eşleşme çıkıyor, eşleşme sayısı 4 veya büyükse kullanıcıyı banla;
-  if (!msg.author.bot && possibleFraud.length > 3){
+  if (!msg.author.bot && possibleFraud?.length > 3){
     if (msg.member.bannable) {
       // 7 günlük mesajlarını sil ve ban sebebine mesajın kendisini yazdır
       await msg.member.ban({days: 7, reason: msg.content});
